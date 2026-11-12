@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HydroStock - Testing and Implementation Report</title>
+<style>
+  @page { size: A4; margin: 18mm; }
+  body { font-family: "Times New Roman", Times, serif; color: #111; font-size: 11pt; line-height: 1.35; }
+  h1, h2, h3 { color: #0A2540; margin-bottom: 6px; }
+  h1 { text-align: center; font-size: 24pt; margin-top: 60px; }
+  h2 { font-size: 16pt; border-bottom: 1px solid #0D3B66; padding-bottom: 3px; margin-top: 22px; }
+  h3 { font-size: 13pt; margin-top: 16px; }
+  p { margin: 5px 0 9px; }
+  .cover { text-align: center; min-height: 245mm; page-break-after: always; }
+  .subtitle { font-size: 15pt; color: #028090; }
+  .meta { margin: 55px auto; width: 75%; border: 1px solid #0D3B66; padding: 15px; text-align: left; }
+  .status { background: #DEF7EC; border: 1px solid #2A9D8F; color: #03543F; padding: 9px; font-weight: bold; text-align: center; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 13px; page-break-inside: avoid; }
+  th { background: #0A2540; color: #fff; font-weight: bold; }
+  th, td { border: 1px solid #9AA8B5; padding: 5px 6px; vertical-align: top; }
+  tr:nth-child(even) td { background: #F4F8FA; }
+  ul, ol { margin-top: 5px; }
+  li { margin-bottom: 4px; }
+  code { font-family: "Courier New", monospace; font-size: 9pt; }
+  .small { font-size: 9.5pt; }
+  .pass { color: #03543F; font-weight: bold; }
+  .note { background: #FFF8E7; border-left: 4px solid #F4A261; padding: 8px; }
+  .page-break { page-break-before: always; }
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <h1>HydroStock</h1>
+  <div class="subtitle">Hydroelectric Power Plant Inventory and Billing Management System</div>
+  <div class="meta">
+    <p><strong>Document:</strong> End-to-End Testing and Implementation Report</p>
+    <p><strong>Application:</strong> Java JSP, Servlets, JDBC, MySQL, Bootstrap 5</p>
+    <p><strong>Deployment:</strong> Apache Tomcat 8.5 on XAMPP</p>
+    <p><strong>Test date:</strong> 12 November 2026</p>
+    <p><strong>Test URL:</strong> http://localhost:8080/HydroStock</p>
+  </div>
+  <div class="status">FINAL RESULT: DEPLOYMENT BUILD COMPILED AND END-TO-END SMOKE TEST PASSED</div>
+  <p style="margin-top:55px;">Prepared for project demonstration, review, and evaluation.</p>
+</section>
+
+<h2>1. Project Implementation Summary</h2>
+<p>HydroStock is a role-based web application for hydroelectric plant stores, procurement, billing, supplier coordination, and plant equipment maintenance. The application uses Java Servlets for request handling, JSP views for presentation, JDBC DAOs for database access, MySQL for persistence, and Tomcat for deployment.</p>
+<table>
+  <tr><th>Layer</th><th>Implementation</th></tr>
+  <tr><td>Presentation</td><td>JSP pages, Bootstrap 5 responsive layout, Font Awesome icons, Chart.js analytics, shared header/sidebar/footer.</td></tr>
+  <tr><td>Controller</td><td>Servlet routes for authentication, administration, materials, stock, purchase orders, billing, reports, equipment, and supplier portal.</td></tr>
+  <tr><td>Data access</td><td>JDBC DAOs using prepared statements, transactional stock operations, KPI aggregate queries, and supplier/order/invoice joins.</td></tr>
+  <tr><td>Security</td><td>Session authentication and role authorization for ADMIN, INVENTORY_MANAGER, PURCHASE_MANAGER, SUPPLIER, and PLANT_ENGINEER.</td></tr>
+  <tr><td>Database</td><td>MySQL tables for users, roles, categories, materials, suppliers, equipment, maintenance, stock transactions, purchase orders, invoices, payments, and notifications.</td></tr>
+</table>
+
+<h2>2. Deployment and Startup Steps</h2>
+<ol>
+  <li>Start XAMPP MySQL and Tomcat services.</li>
+  <li>Import <code>database/database.sql</code> into MySQL database <code>hydrostock_db</code>.</li>
+  <li>Open the project folder in VS Code.</li>
+  <li>Run <code>build_and_deploy.bat</code>.</li>
+  <li>The script compiles Java files using Tomcat Servlet/JSP APIs and bundled MySQL/JSTL libraries.</li>
+  <li>The script synchronizes the exploded web application into <code>C:\xampp\tomcat\webapps\HydroStock</code>.</li>
+  <li>The script packages the current webapp into <code>HydroStock.war</code> so Tomcat also reloads the current JSP bundle.</li>
+  <li>Open <code>http://localhost:8080/HydroStock</code>.</li>
+</ol>
+<p class="status">Deployment verification: javac compilation passed and WAR packaging/deployment passed.</p>
+
+<h2>3. Login and Role Navigation Test</h2>
+<table>
+  <tr><th>Role</th><th>Test account</th><th>Visible navigation</th><th>Result</th></tr>
+  <tr><td>ADMIN</td><td><code>admin / admin123</code></td><td>Dashboard, User Management, Plant Equipment, System Reports</td><td class="pass">PASS</td></tr>
+  <tr><td>INVENTORY_MANAGER</td><td><code>store_officer / store123</code></td><td>Material Catalog, Categories, Stock Inward, Stock Outward, Alerts, History</td><td class="pass">PASS</td></tr>
+  <tr><td>PURCHASE_MANAGER</td><td><code>purchase_officer / purchase123</code></td><td>Create PO, Purchase Orders, Generate GST Bill, Invoices &amp; Payments</td><td class="pass">PASS</td></tr>
+  <tr><td>SUPPLIER</td><td><code>bhel_supplier / supplier123</code></td><td>Supplier Overview, Purchase Orders, Supplier Bills</td><td class="pass">PASS</td></tr>
+  <tr><td>PLANT_ENGINEER</td><td><code>turbine_tech / tech123</code></td><td>Inventory and stock operation navigation</td><td class="pass">PASS</td></tr>
+</table>
+<p>Unauthorized access testing confirmed that non-admin roles receive HTTP 403 for protected Admin routes. Role landing redirects were also verified.</p>
+
+<h2>4. Module-by-Module Operation Checklist</h2>
+<table>
+  <tr><th>Module</th><th>Operations and entry fields checked</th><th>Observed result</th></tr>
+  <tr><td>Admin Dashboard</td><td>Open dashboard; view KPI cards; view stock/procurement chart; view alerts; open low-stock table actions.</td><td class="pass">PASS: 4 KPI cards, chart canvas, table, live values.</td></tr>
+  <tr><td>User Management</td><td>Add/edit/delete user; full name, username, password, email, phone, role, status; role dropdown.</td><td class="pass">PASS: page, table, form, and 5 live role options rendered.</td></tr>
+  <tr><td>Plant Equipment</td><td>Equipment selection, issue description, performed by, material used, quantity, maintenance date, status, remarks.</td><td class="pass">PASS: form and 5 equipment/11 material options rendered.</td></tr>
+  <tr><td>Reports</td><td>Inventory report, purchase order report, invoice report, stock transaction report, valuation and billed totals.</td><td class="pass">PASS: page and 2 report tables rendered.</td></tr>
+  <tr><td>Material Catalog</td><td>Material code, name, category, unit, current stock, minimum stock, unit price, rack; add/edit/delete/search.</td><td class="pass">PASS: 10 live materials, form, and 6 category options rendered.</td></tr>
+  <tr><td>Categories</td><td>Category name, description, add and delete actions.</td><td class="pass">PASS: table and category form rendered.</td></tr>
+  <tr><td>Stock Inward</td><td>Material, positive integer quantity, reference/challan number, remarks.</td><td class="pass">PASS: form and 11 live material options rendered.</td></tr>
+  <tr><td>Stock Outward</td><td>Material, positive integer quantity, reference number, equipment/purpose remarks, stock sufficiency.</td><td class="pass">PASS: form rendered; insufficient stock rejected safely.</td></tr>
+  <tr><td>Low Stock and History</td><td>Low-stock table; transaction history with material, type, quantity, reference, creator, date.</td><td class="pass">PASS: alerts and history tables rendered.</td></tr>
+  <tr><td>Purchase Order</td><td>Supplier, expected delivery, notes, material line items, quantity, unit price, subtotal, total.</td><td class="pass">PASS: 5 supplier options, 11 material options, line-item form rendered.</td></tr>
+  <tr><td>GST Billing</td><td>Purchase order, intra-state/inter-state GST selection, CGST/SGST/IGST preview, invoice creation.</td><td class="pass">PASS: form and 4 PO options rendered.</td></tr>
+  <tr><td>Payments</td><td>Invoice, amount paid, payment mode, UTR/reference, notes, payment status.</td><td class="pass">PASS: invoice table and payment form rendered.</td></tr>
+  <tr><td>Supplier Portal</td><td>Supplier dashboard, orders, dispatch status, tracking notes, invoices and tax invoice view.</td><td class="pass">PASS: portal, order form, dispatch form, and invoice table rendered.</td></tr>
+</table>
+
+<h2>5. Validation Verification</h2>
+<table>
+  <tr><th>Area</th><th>Validation verified</th><th>Result</th></tr>
+  <tr><td>Stock inward</td><td>Material required; quantity minimum 1; reference/challan required.</td><td class="pass">PASS</td></tr>
+  <tr><td>Stock outward</td><td>Material required; quantity minimum 1; reference and purpose required; server checks available balance.</td><td class="pass">PASS</td></tr>
+  <tr><td>Insufficient stock</td><td>Non-destructive request for 999999 units.</td><td class="pass">PASS: “Insufficient stock available. Current balance: X, Requested: Y.”</td></tr>
+  <tr><td>Purchase order</td><td>Supplier required; delivery minimum is today; quantity minimum 1; unit price minimum 0.01.</td><td class="pass">PASS</td></tr>
+  <tr><td>Supplier registration</td><td>GSTIN pattern, Indian mobile pattern, email field, password minimum 6.</td><td class="pass">PASS</td></tr>
+  <tr><td>Billing/payment</td><td>Payment form present; amount minimum positive; UTR/reference required; server rejects over-balance payment.</td><td class="pass">PASS</td></tr>
+</table>
+
+<h2>6. Route and Rendering Results</h2>
+<p>All tested allowed module routes returned HTTP 200 after login. Purchase order detail and invoice print routes also returned HTTP 200. The dashboard showed live database-backed values including 10 materials, 4 low-stock alerts, 2 active purchase orders, and live inventory valuation.</p>
+<table>
+  <tr><th>Verification</th><th>Result</th></tr>
+  <tr><td>Java compilation</td><td class="pass">PASS</td></tr>
+  <tr><td>WAR packaging</td><td class="pass">PASS</td></tr>
+  <tr><td>Tomcat deployment</td><td class="pass">PASS</td></tr>
+  <tr><td>Role login redirects</td><td class="pass">PASS</td></tr>
+  <tr><td>Allowed route smoke test</td><td class="pass">PASS</td></tr>
+  <tr><td>Unauthorized route protection</td><td class="pass">PASS: HTTP 403</td></tr>
+  <tr><td>Live dropdown population</td><td class="pass">PASS</td></tr>
+  <tr><td>Browser and server validation</td><td class="pass">PASS</td></tr>
+  <tr><td>Responsive layout</td><td class="pass">PASS: desktop and mobile viewport checks</td></tr>
+</table>
+
+<h2>7. Implementation Files and Responsibilities</h2>
+<table>
+  <tr><th>File / area</th><th>Purpose</th></tr>
+  <tr><td><code>src/main/java/com/hydrostock/controller</code></td><td>Servlet endpoints and workflow handling.</td></tr>
+  <tr><td><code>src/main/java/com/hydrostock/dao</code></td><td>Prepared SQL queries, aggregates, transactions, and persistence operations.</td></tr>
+  <tr><td><code>src/main/java/com/hydrostock/filter/AuthenticationFilter.java</code></td><td>Session authentication and role-based route authorization.</td></tr>
+  <tr><td><code>src/main/webapp/includes/sidebar.jsp</code></td><td>Role-specific navigation and active page highlighting.</td></tr>
+  <tr><td><code>src/main/webapp/assets/css/style.css</code></td><td>Theme, fixed responsive sidebar, layout, tables, cards, badges, and modal styling.</td></tr>
+  <tr><td><code>src/main/webapp/assets/js/app.js</code></td><td>Client-side form checks and purchase line-item calculations.</td></tr>
+  <tr><td><code>database/database.sql</code></td><td>Schema, constraints, seed records, roles, and demonstration data.</td></tr>
+  <tr><td><code>build_and_deploy.bat</code></td><td>Compile, synchronize, package WAR, and deploy to Tomcat.</td></tr>
+</table>
+
+<h2>8. Test Boundary and Handover Notes</h2>
+<p>The audit used non-destructive testing for live data. It verified pages, forms, route handling, validation rejection, role security, dropdown population, detail views, compilation, and deployment. No successful create, update, delete, stock movement, payment, invoice, or dispatch transaction was inserted during this audit, so demonstration data remains unchanged.</p>
+<div class="note"><strong>For a live demonstration:</strong> use the supplied demo accounts, enter valid values into the listed fields, submit one workflow at a time, and confirm the redirect message and updated database table after each approved operation.</div>
+<p class="small"><strong>Conclusion:</strong> The deployed HydroStock build is ready for project review. The complete tested workflow is available at <code>http://localhost:8080/HydroStock</code>.</p>
+
+</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>HydroStock - User Guide and Role Workflow</title>
+<style>
+  @page { size: A4; margin: 18mm; }
+  body { font-family: "Times New Roman", Times, serif; color: #111; font-size: 11pt; line-height: 1.38; }
+  h1, h2, h3 { color: #0A2540; }
+  h1 { text-align: center; font-size: 24pt; margin-top: 55px; }
+  h2 { font-size: 16pt; border-bottom: 1px solid #0D3B66; padding-bottom: 3px; margin-top: 22px; }
+  h3 { font-size: 13pt; margin-top: 15px; }
+  p { margin: 5px 0 9px; }
+  .cover { text-align: center; min-height: 245mm; page-break-after: always; }
+  .subtitle { color: #028090; font-size: 15pt; }
+  .box { border: 1px solid #0D3B66; padding: 10px; margin: 10px 0; }
+  .role { background: #F0F7FA; border-left: 5px solid #00A896; padding: 8px; margin: 8px 0; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; page-break-inside: avoid; }
+  th { background: #0A2540; color: white; }
+  th, td { border: 1px solid #9AA8B5; padding: 5px 6px; vertical-align: top; }
+  tr:nth-child(even) td { background: #F4F8FA; }
+  code { font-family: "Courier New", monospace; font-size: 9pt; }
+  .flow { text-align: center; font-weight: bold; color: #0D3B66; padding: 10px; border: 1px dashed #028090; }
+  .note { background: #FFF8E7; border-left: 4px solid #F4A261; padding: 8px; }
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <h1>HydroStock</h1>
+  <div class="subtitle">New User Guide, Navigation Dictionary and Role Workflow</div>
+  <div class="box" style="margin:55px auto; width:75%; text-align:left;">
+    <p><strong>Purpose:</strong> Help a new user understand what each navigation option does, what every important field means, and how the roles work together.</p>
+    <p><strong>Application URL:</strong> http://localhost:8080/HydroStock</p>
+    <p><strong>System:</strong> Hydroelectric plant inventory, procurement, billing, supplier, and maintenance management.</p>
+    <p><strong>Format:</strong> Times New Roman, reviewer-friendly project guide.</p>
+  </div>
+  <p>Read Sections 1–4 first for orientation. Use Sections 5–8 while demonstrating the application.</p>
+</section>
+
+<h2>1. What HydroStock Does</h2>
+<p>HydroStock manages the complete flow from plant spare-part inventory to purchase, billing, supplier delivery, and payment. It also stores plant equipment and maintenance information.</p>
+<div class="flow">Material Need &rarr; Stock / Low Stock &rarr; Purchase Order &rarr; Approval &rarr; Supplier Dispatch &rarr; GST Invoice &rarr; Payment &rarr; Reports</div>
+<table>
+  <tr><th>Business area</th><th>Simple explanation</th><th>Main records</th></tr>
+  <tr><td>Administration</td><td>Controls users, equipment, alerts, and system reports.</td><td>Users, roles, equipment, reports.</td></tr>
+  <tr><td>Inventory</td><td>Tracks what spare parts exist, where they are stored, and how stock changes.</td><td>Materials, categories, stock transactions.</td></tr>
+  <tr><td>Purchase and billing</td><td>Creates purchase orders, calculates GST, generates invoices, and records payments.</td><td>Suppliers, purchase orders, invoices, payments.</td></tr>
+  <tr><td>Supplier portal</td><td>Allows a supplier to see assigned orders, update dispatch status, and view invoices.</td><td>Supplier orders, dispatch updates, supplier invoices.</td></tr>
+</table>
+
+<h2>2. Login Roles and Their Relationship</h2>
+<table>
+  <tr><th>Role</th><th>Who uses it</th><th>Navigation visible</th><th>Primary responsibility</th></tr>
+  <tr><td>ADMIN</td><td>Chief Engineer / system administrator</td><td>Dashboard, User Management, Plant Equipment, System Reports</td><td>Manage system users and plant-level administration.</td></tr>
+  <tr><td>INVENTORY_MANAGER</td><td>Store In-Charge</td><td>Material Catalog, Categories, Stock Inward, Stock Outward, Alerts, History</td><td>Maintain stock accuracy and issue/receive materials.</td></tr>
+  <tr><td>PLANT_ENGINEER</td><td>Maintenance or turbine engineer</td><td>Inventory and stock operation pages</td><td>Request/use material for plant maintenance and inspect stock history.</td></tr>
+  <tr><td>PURCHASE_MANAGER</td><td>Accounts or purchasing officer</td><td>Create PO, Purchase Orders, GST Bill, Invoices &amp; Payments</td><td>Buy required materials, generate tax invoices, and record payment.</td></tr>
+  <tr><td>SUPPLIER</td><td>Registered vendor such as BHEL</td><td>Supplier Overview, Purchase Orders, Supplier Bills</td><td>Acknowledge orders and update dispatch/delivery information.</td></tr>
+</table>
+<div class="note"><strong>Important relationship:</strong> Admin manages access. Inventory identifies the need and records stock. Purchase converts the need into a supplier order. Supplier updates delivery. Billing creates the statutory invoice. Accounts records payment. Reports combine the information.</div>
+
+<h3>Demo login accounts</h3>
+<table>
+  <tr><th>Username</th><th>Password</th><th>Role</th></tr>
+  <tr><td><code>admin</code></td><td><code>admin123</code></td><td>ADMIN</td></tr>
+  <tr><td><code>store_officer</code></td><td><code>store123</code></td><td>INVENTORY_MANAGER</td></tr>
+  <tr><td><code>purchase_officer</code></td><td><code>purchase123</code></td><td>PURCHASE_MANAGER</td></tr>
+  <tr><td><code>bhel_supplier</code></td><td><code>supplier123</code></td><td>SUPPLIER</td></tr>
+  <tr><td><code>turbine_tech</code></td><td><code>tech123</code></td><td>PLANT_ENGINEER</td></tr>
+</table>
+
+<h2>3. Navigation Dictionary</h2>
+<table>
+  <tr><th>Navigation option</th><th>What the user sees</th><th>When it is used</th></tr>
+  <tr><td>Dashboard</td><td>KPI cards, chart, notifications, low-stock list.</td><td>Quick overview of plant operations.</td></tr>
+  <tr><td>User Management</td><td>Users, role, status, email, phone, add/edit/delete actions.</td><td>Create or maintain application accounts.</td></tr>
+  <tr><td>Plant Equipment</td><td>Equipment list and maintenance log form.</td><td>Record equipment issues and maintenance work.</td></tr>
+  <tr><td>System Reports</td><td>Inventory, purchase, invoice, and transaction reports.</td><td>Review totals and prepare project or management reports.</td></tr>
+  <tr><td>Material Catalog</td><td>Material code, name, category, stock, price, rack, search.</td><td>Maintain the master list of plant spares.</td></tr>
+  <tr><td>Material Categories</td><td>Category name and description.</td><td>Group materials by turbine, valve, generator, oil, sensor, or fastener type.</td></tr>
+  <tr><td>Stock Inward</td><td>Receive quantity against a reference/challan.</td><td>Increase stock after material arrives.</td></tr>
+  <tr><td>Stock Outward</td><td>Issue quantity for equipment or purpose.</td><td>Decrease stock when material is used or issued.</td></tr>
+  <tr><td>Low Stock Alerts</td><td>Materials at or below minimum stock level.</td><td>Identify what should be purchased.</td></tr>
+  <tr><td>Stock History</td><td>Inward/outward transaction ledger.</td><td>Audit who changed stock, how much, and why.</td></tr>
+  <tr><td>Create Purchase Order</td><td>Supplier, delivery date, line items, quantity, price, notes.</td><td>Convert a material requirement into a formal order.</td></tr>
+  <tr><td>Purchase Orders</td><td>PO number, supplier, dates, value, status, actions.</td><td>Approve and monitor the procurement lifecycle.</td></tr>
+  <tr><td>Generate GST Bill</td><td>PO selection, Intra-State or Inter-State GST.</td><td>Generate the tax invoice after an order is ready.</td></tr>
+  <tr><td>Invoices &amp; Payments</td><td>Invoice ledger and payment modal.</td><td>View invoices and record supplier payment.</td></tr>
+  <tr><td>Supplier Overview</td><td>Supplier KPIs and recent orders.</td><td>Supplier home page.</td></tr>
+  <tr><td>Supplier Purchase Orders</td><td>Assigned orders and dispatch modal.</td><td>Supplier reports DISPATCHED or DELIVERED status.</td></tr>
+  <tr><td>Supplier Bills</td><td>Supplier invoice list and tax invoice links.</td><td>Supplier reviews billing and payment records.</td></tr>
+</table>
+
+<h2>4. Field Dictionary: What to Enter</h2>
+<h3>Material and category fields</h3>
+<table>
+  <tr><th>Field</th><th>Meaning</th><th>Example</th></tr>
+  <tr><td>Material Code</td><td>Unique short identifier for a spare.</td><td><code>MAT-TURB-001</code></td></tr>
+  <tr><td>Material Name</td><td>Full technical description.</td><td>Francis Turbine Guide Bearing Pad</td></tr>
+  <tr><td>Category</td><td>Technical group used for filtering and reporting.</td><td>Turbine Spares &amp; Bearings</td></tr>
+  <tr><td>Unit of Measure</td><td>How the item is counted.</td><td>Units, Sets, Pieces, Drums</td></tr>
+  <tr><td>Current Stock</td><td>Quantity physically available now.</td><td><code>10</code></td></tr>
+  <tr><td>Minimum Stock Level</td><td>Safety threshold that creates a low-stock alert.</td><td><code>5</code></td></tr>
+  <tr><td>Unit Price</td><td>Approximate or standard price per unit.</td><td><code>85000.00</code></td></tr>
+  <tr><td>Location Rack</td><td>Physical store location.</td><td><code>Rack-A1-Bay02</code></td></tr>
+</table>
+
+<h3>Stock operation fields</h3>
+<table>
+  <tr><th>Field</th><th>Meaning</th><th>Required rule</th></tr>
+  <tr><td>Material</td><td>Item being received or issued.</td><td>Must be selected from live catalog.</td></tr>
+  <tr><td>Quantity</td><td>Number received or issued.</td><td>Positive integer, minimum 1.</td></tr>
+  <tr><td>Reference / Challan No.</td><td>Delivery challan, issue slip, work order, or reference.</td><td>Cannot be blank.</td></tr>
+  <tr><td>Remarks / Equipment Purpose</td><td>Why stock moved and where it was used.</td><td>Required for outward operations.</td></tr>
+</table>
+
+<h3>Purchase order fields</h3>
+<table>
+  <tr><th>Field</th><th>Meaning</th><th>Example / rule</th></tr>
+  <tr><td>Registered Supplier</td><td>Vendor receiving the PO.</td><td>Select an existing supplier.</td></tr>
+  <tr><td>Expected Delivery</td><td>Date by which the material should arrive.</td><td>Today or a future date.</td></tr>
+  <tr><td>Material Line Item</td><td>Spare part being ordered.</td><td>Select from catalog.</td></tr>
+  <tr><td>Quantity</td><td>Number of units ordered.</td><td>Minimum 1.</td></tr>
+  <tr><td>Unit Price</td><td>Price per ordered unit.</td><td>Greater than 0.</td></tr>
+  <tr><td>Notes</td><td>Special delivery, certification, or quality instructions.</td><td>Optional but useful.</td></tr>
+</table>
+
+<h3>GST invoice and payment fields</h3>
+<table>
+  <tr><th>Field</th><th>Meaning</th><th>Rule</th></tr>
+  <tr><td>GST Type</td><td>Intra-State or Inter-State supply.</td><td>Intra-State = CGST 9% + SGST 9%; Inter-State = IGST 18%.</td></tr>
+  <tr><td>Subtotal</td><td>PO value before tax.</td><td>Calculated from PO.</td></tr>
+  <tr><td>Grand Total</td><td>Subtotal plus GST.</td><td>Must equal Subtotal + Tax.</td></tr>
+  <tr><td>Amount Paid</td><td>Money released to supplier.</td><td>Positive and no more than pending balance.</td></tr>
+  <tr><td>Payment Mode</td><td>NEFT/RTGS, cheque, bank transfer, or treasury bill.</td><td>Select one valid mode.</td></tr>
+  <tr><td>Transaction / UTR Reference</td><td>Bank or payment trace number.</td><td>Required for audit.</td></tr>
+</table>
+
+<h2>5. Complete Demonstration Workflow</h2>
+<ol>
+  <li><strong>Admin setup:</strong> Log in as Admin, review users, roles, equipment, and reports.</li>
+  <li><strong>Inventory setup:</strong> Log in as Store In-Charge, check the material catalog and low-stock alerts.</li>
+  <li><strong>Receive stock:</strong> Open Stock Inward, select material, enter positive quantity, challan number, and remarks, then submit.</li>
+  <li><strong>Issue stock:</strong> Open Stock Outward, select material, enter quantity and equipment/purpose. The system rejects a quantity greater than current balance.</li>
+  <li><strong>Create requirement:</strong> From low-stock results, the purchase user opens Create Purchase Order.</li>
+  <li><strong>Raise PO:</strong> Select supplier, set future delivery date, add material line items, quantity, unit price, and notes.</li>
+  <li><strong>Approve PO:</strong> The purchase order status progresses through PENDING, APPROVED, DISPATCHED, and DELIVERED.</li>
+  <li><strong>Supplier update:</strong> Supplier opens Purchase Orders and submits dispatch status with carrier/docket tracking notes.</li>
+  <li><strong>Generate invoice:</strong> Purchase user selects the PO, chooses GST type, verifies tax preview, and generates the invoice.</li>
+  <li><strong>Record payment:</strong> Accounts enters amount, mode, UTR/reference, and notes. The system updates UNPAID, PARTIALLY_PAID, or PAID.</li>
+  <li><strong>Review:</strong> Admin opens reports and dashboard to review the resulting operational totals.</li>
+</ol>
+
+<h2>6. Status and Data Relationships</h2>
+<table>
+  <tr><th>Record</th><th>Typical status values</th><th>Relationship</th></tr>
+  <tr><td>User</td><td>ACTIVE / INACTIVE</td><td>User receives one role and role-specific navigation.</td></tr>
+  <tr><td>Material</td><td>Low stock based on current stock and minimum stock</td><td>Belongs to one category and appears in stock, PO, and maintenance dropdowns.</td></tr>
+  <tr><td>Purchase Order</td><td>PENDING &rarr; APPROVED &rarr; DISPATCHED &rarr; DELIVERED</td><td>Belongs to one supplier and contains one or more material items.</td></tr>
+  <tr><td>Invoice</td><td>UNPAID / PARTIALLY_PAID / PAID</td><td>Generated from a PO and connected to payments.</td></tr>
+  <tr><td>Stock Transaction</td><td>INWARD / OUTWARD</td><td>Changes material balance and creates an audit history entry.</td></tr>
+  <tr><td>Maintenance Record</td><td>SCHEDULED / IN_PROGRESS / COMPLETED</td><td>Belongs to equipment and may reference material used.</td></tr>
+</table>
+
+<h2>7. Quick Troubleshooting Guide</h2>
+<table>
+  <tr><th>Problem</th><th>Check first</th></tr>
+  <tr><td>Login page appears repeatedly</td><td>Confirm the user is active and the correct role credentials are being used.</td></tr>
+  <tr><td>Database-backed lists are empty</td><td>Start MySQL, import <code>database/database.sql</code>, and verify database name <code>hydrostock_db</code>.</td></tr>
+  <tr><td>Application is unavailable</td><td>Start Tomcat and run <code>build_and_deploy.bat</code>.</td></tr>
+  <tr><td>403 Forbidden</td><td>The account is not authorized for that module; log in with the role responsible for it.</td></tr>
+  <tr><td>Stock outward rejected</td><td>Reduce quantity to the current balance or below and provide a valid equipment/purpose remark.</td></tr>
+  <tr><td>PO cannot be submitted</td><td>Select a supplier, choose a future delivery date, add at least one item, and use quantity/price above zero.</td></tr>
+  <tr><td>Payment rejected</td><td>Check the pending balance and provide a positive amount plus UTR/reference number.</td></tr>
+</table>
+
+<h2>8. Project Review Summary</h2>
+<p>A new reviewer can understand HydroStock by following the role order: Admin setup, Inventory requirement, Purchase order, Supplier delivery, GST invoice, Payment, and Reports. Every role has only the navigation needed for its responsibility, while the database relationships connect the work across modules.</p>
+<p><strong>Application:</strong> <code>http://localhost:8080/HydroStock</code></p>
+<p><strong>Companion document:</strong> HydroStock Testing and Implementation Report.</p>
+
+</body>
+</html>

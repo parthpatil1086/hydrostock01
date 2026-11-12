@@ -1,0 +1,367 @@
+/* ========================================================================
+   HydroStock: Hydroelectric Power Plant Inventory & Billing Management
+   Modern Engineering & Plant Theme Styling
+   ======================================================================== */
+
+:root {
+    --hydro-navy: #0A2540;
+    --hydro-blue: #0D3B66;
+    --hydro-cyan: #00A896;
+    --hydro-teal: #028090;
+    --hydro-sky: #F0F7FA;
+    --hydro-slate: #2D3748;
+    --hydro-light: #F8FAFC;
+    --hydro-border: #E2E8F0;
+    --hydro-danger: #E63946;
+    --hydro-warning: #F4A261;
+    --hydro-success: #2A9D8F;
+    --sidebar-width: 260px;
+}
+
+body {
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--hydro-light);
+    color: var(--hydro-slate);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+}
+
+/* ---------------- Layout & Wrapper ---------------- */
+.app-wrapper {
+    width: 100%;
+    min-height: 100vh;
+}
+
+/* ---------------- Sidebar Navigation ---------------- */
+.sidebar {
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: var(--sidebar-width);
+    height: 100vh;
+    background: linear-gradient(180deg, var(--hydro-navy) 0%, var(--hydro-blue) 100%);
+    color: #FFFFFF;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.sidebar-brand {
+    padding: 24px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.15);
+}
+
+.brand-icon {
+    font-size: 1.8rem;
+    color: var(--hydro-cyan);
+}
+
+.brand-text h4 {
+    margin: 0;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.5px;
+    color: #FFFFFF;
+}
+
+.brand-text span {
+    font-size: 0.72rem;
+    color: #A0AEC0;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 15px 0;
+    margin: 0;
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.menu-header {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: #718096;
+    padding: 14px 24px 6px;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.sidebar-menu li a {
+    display: flex;
+    align-items: center;
+    padding: 12px 24px;
+    color: #CBD5E1;
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    border-left: 4px solid transparent;
+}
+
+.sidebar-menu li a i {
+    width: 24px;
+    font-size: 1.1rem;
+    margin-right: 12px;
+    color: #94A3B8;
+}
+
+.sidebar-menu li a:hover,
+.sidebar-menu li.active a {
+    color: #FFFFFF;
+    background: rgba(0, 168, 150, 0.15);
+    border-left-color: var(--hydro-cyan);
+}
+
+.sidebar-menu li.active a i,
+.sidebar-menu li a:hover i {
+    color: var(--hydro-cyan);
+}
+
+.sidebar-user {
+    padding: 16px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--hydro-cyan);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: #FFFFFF;
+    font-size: 1.1rem;
+}
+
+.user-info .user-name {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    line-height: 1.2;
+}
+
+.user-info .user-role {
+    font-size: 0.75rem;
+    color: #94A3B8;
+}
+
+/* ---------------- Main Content Layout ---------------- */
+.main-wrapper {
+    flex-grow: 1;
+    margin-left: var(--sidebar-width);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+.top-navbar {
+    height: 70px;
+    background-color: #FFFFFF;
+    border-bottom: 1px solid var(--hydro-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.station-badge {
+    background-color: rgba(2, 128, 144, 0.1);
+    color: var(--hydro-teal);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid rgba(2, 128, 144, 0.25);
+}
+
+.status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--hydro-cyan);
+    box-shadow: 0 0 8px var(--hydro-cyan);
+}
+
+.content-body {
+    padding: 30px;
+    flex-grow: 1;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.modal-content { border: 0; border-radius: 12px; box-shadow: 0 1rem 3rem rgba(10, 37, 64, .2); }
+.modal-body { max-height: 70vh; overflow-y: auto; }
+.table-responsive { border-radius: 8px; }
+.table { min-width: 720px; }
+@media (max-width: 768px) {
+    :root { --sidebar-width: 220px; }
+    .sidebar { width: var(--sidebar-width); }
+    .main-wrapper { margin-left: var(--sidebar-width); }
+    .top-navbar, .content-body { padding-left: 16px; padding-right: 16px; }
+    .content-body { padding-top: 20px; }
+}
+
+@media (max-width: 560px) {
+    :root { --sidebar-width: 190px; }
+    .sidebar-menu li a { padding-left: 14px; padding-right: 10px; font-size: .82rem; }
+    .menu-header { padding-left: 14px; padding-right: 8px; font-size: .62rem; }
+    .sidebar-brand { padding: 18px 14px; }
+    .brand-text h4 { font-size: 1rem; }
+    .brand-text span { font-size: .58rem; }
+    .sidebar-user { padding-left: 14px; padding-right: 10px; }
+}
+
+/* ---------------- Metric Cards (KPIs) ---------------- */
+.kpi-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    border: 1px solid var(--hydro-border);
+    padding: 24px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.06);
+}
+
+.kpi-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--hydro-navy);
+    line-height: 1.2;
+}
+
+.kpi-label {
+    font-size: 0.85rem;
+    color: #64748B;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.kpi-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
+
+.icon-blue { background: rgba(13, 59, 102, 0.1); color: var(--hydro-blue); }
+.icon-cyan { background: rgba(0, 168, 150, 0.1); color: var(--hydro-cyan); }
+.icon-amber { background: rgba(244, 162, 97, 0.15); color: var(--hydro-warning); }
+.icon-red { background: rgba(230, 57, 70, 0.1); color: var(--hydro-danger); }
+
+/* ---------------- Data Tables & Panels ---------------- */
+.panel-card {
+    background: #FFFFFF;
+    border-radius: 12px;
+    border: 1px solid var(--hydro-border);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    margin-bottom: 24px;
+    overflow: hidden;
+}
+
+.panel-header {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--hydro-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #FAFCFD;
+}
+
+.panel-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--hydro-navy);
+    margin: 0;
+}
+
+.table th {
+    background-color: #F8FAFC;
+    color: #475569;
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid var(--hydro-border);
+    padding: 12px 16px;
+}
+
+.table td {
+    padding: 14px 16px;
+    vertical-align: middle;
+    color: #334155;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--hydro-border);
+}
+
+/* ---------------- Badges ---------------- */
+.badge-status {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.badge-approved, .badge-paid, .badge-delivered, .badge-operational {
+    background-color: #DEF7EC;
+    color: #03543F;
+}
+
+.badge-pending, .badge-partially_paid, .badge-scheduled {
+    background-color: #FEF08A;
+    color: #854D0E;
+}
+
+.badge-dispatched, .badge-in_progress {
+    background-color: #E0E7FF;
+    color: #3730A3;
+}
+
+.badge-low-stock, .badge-unpaid, .badge-maintenance_required, .badge-cancelled {
+    background-color: #FEE2E2;
+    color: #991B1B;
+}
+
+/* ---------------- Invoices (Print View) ---------------- */
+@media print {
+    .sidebar, .top-navbar, .no-print, .btn {
+        display: none !important;
+    }
+    .content-body {
+        padding: 0 !important;
+    }
+    .panel-card {
+        border: none !important;
+        box-shadow: none !important;
+    }
+}
